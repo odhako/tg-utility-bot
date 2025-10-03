@@ -1,11 +1,11 @@
+import logging
+# logging - DEBUG, INFO, WARNING
+logging.basicConfig(format='[%(levelname)s %(asctime)s] %(name)s: %(message)s', level=logging.DEBUG)
+
 from dotenv import load_dotenv
 import os
-from telethon import TelegramClient, events
-import logging
-
-
-# logging - set INFO of WARNING
-logging.basicConfig(format='[%(levelname)s %(asctime)s] %(name)s: %(message)s', level=logging.DEBUG)
+import ssl
+from telethon import TelegramClient, events, Button
 
 
 # log in
@@ -29,10 +29,40 @@ bot = TelegramClient('bot', api_id, api_hash).start(bot_token=bot_token)
 # with bot:
 #     bot.loop.run_until_complete(main())
 
+
+keyboard_text = [
+    Button.text('hello', resize=True),
+    Button.text('button'),
+    Button.text('cool'),
+]
+
+keyboard_inline = [
+    Button.inline('hello', b'hello'),
+    Button.inline('button', b'button'),
+    Button.inline('cool', b'cool'),
+]
+
+
 @bot.on(events.NewMessage)
-async def my_event_handler(event):
+async def message_handler(event):
+    sender = await event.get_sender()
     if 'hello' in event.raw_text:
-        await event.reply('hi!')
+        await bot.send_message(sender, 'hi', buttons=keyboard_inline)
+
+
+@bot.on(events.CallbackQuery(data=b'hello'))
+async def button_handler(event):
+    print('hello')
+    await event.answer('nice try')
+    await event.edit('edited????', buttons=keyboard_inline)
+
+    # if event.data == 'button':
+    #     print('button')
+    #     await bot.edit_message(sender, 'the button was pressed', buttons=keyboard_inline)
+    # if event.data == 'cool':
+    #     print('cool')
+    #     await bot.edit_message(sender, 'so you are!', buttons=keyboard_inline)
+
 
 bot.start()
 bot.run_until_disconnected()
