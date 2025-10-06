@@ -4,3 +4,4 @@ settings.py
 poetry.lock
 /test_files
 *.session
+.db
