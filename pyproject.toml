@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tg-utility-bot"
-version = "0.1.0"
+version = "0.1"
 description = "Telegram bot for random purpose."
 authors = ["odhako <odhako@gmail.com>"]
 readme = "README.md"
