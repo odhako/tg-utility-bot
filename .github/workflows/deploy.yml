@@ -1,0 +1,13 @@
+name: deploy
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: connecting with ssh
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}
+          ls -a
+        shell: bash
