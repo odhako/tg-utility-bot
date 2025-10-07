@@ -8,6 +8,12 @@ jobs:
     steps:
       - name: connecting with ssh
         run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/ssh.key
+          chmod 600 ~/.ssh/ssh.key
+          eval $(ssh-agent -s)          
+          ssh-add ~/.ssh/ssh.key
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}
           ls -a
+          pwd
         shell: bash
