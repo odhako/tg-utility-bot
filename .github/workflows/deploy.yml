@@ -13,7 +13,7 @@ jobs:
           chmod 600 ~/.ssh/ssh.key
           eval $(ssh-agent -s)          
           ssh-add ~/.ssh/ssh.key
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}
+          ssh -tt -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}
           ls -a
           pwd
         shell: bash
