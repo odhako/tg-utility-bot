@@ -1,5 +1,3 @@
-from dotenv import load_dotenv
-import os
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import asyncio
 from telethon import TelegramClient, events, Button
@@ -13,22 +11,17 @@ logging.basicConfig(format='[%(levelname)s %(asctime)s] %(name)s: %(message)s', 
 
 
 # log in
-load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
-api_id = int(os.environ.get('api_id'))
-api_hash = os.environ.get('api_hash')
-bot_token = os.environ.get('bot_token')
-bot = TelegramClient('bot', api_id, api_hash, catch_up=True)
+bot = TelegramClient('bot', settings.api_id, settings.api_hash, catch_up=True)
 
 
 # variables
-admin = int(os.environ.get('admin'))
-public_from = int(os.environ.get('public_from'))
-public_to = int(os.environ.get('public_to'))
-main_public = int(os.environ.get('main_public'))
+admin = settings.admin
+public_from = settings.public_from
+public_to = settings.public_to
 
 
 # creating db - if not exists
-DB = 'posts'
+DB = settings.database_file
 db_functions.create_db(DB)
 
 # main keyboard
@@ -120,7 +113,7 @@ async def auto_poster():
 
 # main loop
 async def main():
-    await bot.start(bot_token=bot_token)
+    await bot.start(bot_token=settings.bot_token)
     scheduler.start()
     print("Scheduler started...\n(Press Ctrl+C to stop this)")
     await bot.run_until_disconnected()
