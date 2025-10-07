@@ -122,7 +122,7 @@ async def main():
 # APScheduler initialization
 scheduler = AsyncIOScheduler()
 # scheduler.add_job(auto_poster, 'cron', hour='0,8,16', jitter=6000)
-scheduler.add_job(auto_poster, 'interval', seconds='5')
+scheduler.add_job(auto_poster, 'interval', seconds=5)
 
 
 if __name__ == "__main__":
