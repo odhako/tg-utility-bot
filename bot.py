@@ -13,12 +13,10 @@ logging.basicConfig(format='[%(levelname)s %(asctime)s] %(name)s: %(message)s', 
 # log in
 bot = TelegramClient('bot', settings.api_id, settings.api_hash, catch_up=False)
 
-
 # variables
 admin = settings.admin
 public_from = settings.public_from
 public_to = settings.public_to
-
 
 # creating db - if not exists
 DB = settings.database_file
@@ -124,8 +122,8 @@ async def main():
 
 # APScheduler initialization
 scheduler = AsyncIOScheduler()
-# scheduler.add_job(auto_poster, 'cron', hour='0,8,16', jitter=6000)
-scheduler.add_job(auto_poster, 'interval', seconds=30)
+scheduler.add_job(auto_poster, 'cron', hour='0,8,16', jitter=6000)
+# scheduler.add_job(auto_poster, 'interval', seconds=30)
 
 
 if __name__ == "__main__":
