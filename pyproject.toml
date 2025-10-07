@@ -1,4 +1,5 @@
 [tool.poetry]
+package-mode = false
 name = "tg-utility-bot"
 version = "0.1"
 description = "Telegram bot for random purpose."
