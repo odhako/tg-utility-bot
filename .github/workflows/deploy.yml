@@ -6,15 +6,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: connecting with ssh
+      - name: configure ssh key
         run: |
           mkdir -p ~/.ssh/
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/ssh.key
           chmod 600 ~/.ssh/ssh.key
           eval $(ssh-agent -s)          
           ssh-add ~/.ssh/ssh.key
-          ssh -tt -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}
-          ls -a
-          pwd
-          exit
+        shell: bash
+      - name: connecting server and making something
+        run: |          
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} <<EOF
+            ls -a
+            pwd
+            exit
+          EOF
+        shell: bash
+      - name: removing ssh key
+        run: rm ~/.ssh/ssh.key
         shell: bash
