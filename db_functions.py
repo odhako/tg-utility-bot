@@ -1,3 +1,4 @@
+import os
 import sqlite3
 import logging
 
@@ -116,4 +117,5 @@ if __name__ == "__main__":
     logging.debug(pop_post_from_db(test_db))
     logging.debug(pop_post_from_db(test_db))
 
-    logging.debug(('All posts remaining:', get_all_posts_from_db(test_db)))
+    logging.info(('All posts remaining:', get_all_posts_from_db(test_db)))
+    os.remove(f'{test_db}.db')
