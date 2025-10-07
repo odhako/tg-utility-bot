@@ -5,4 +5,4 @@ test_files/
 *.session
 *.session-journal
 *.db
-__pychache__/
+__pycache__/
