@@ -7,7 +7,7 @@ import db_functions
 
 import logging
 # logging - DEBUG, INFO, WARNING
-logging.basicConfig(format='[%(levelname)s %(asctime)s] %(name)s: %(message)s', level=logging.INFO)
+logging.basicConfig(format='[%(levelname)s %(asctime)s] %(name)s: %(message)s', level=logging.DEBUG)
 
 
 # log in
@@ -121,7 +121,8 @@ async def main():
 
 # APScheduler initialization
 scheduler = AsyncIOScheduler()
-scheduler.add_job(auto_poster, 'cron', hour='0,8,16', jitter=6000)
+# scheduler.add_job(auto_poster, 'cron', hour='0,8,16', jitter=6000)
+scheduler.add_job(auto_poster, 'interval', seconds='5')
 
 
 if __name__ == "__main__":
