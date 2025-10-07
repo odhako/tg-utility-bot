@@ -7,11 +7,11 @@ import db_functions
 
 import logging
 # logging - DEBUG, INFO, WARNING
-logging.basicConfig(format='[%(levelname)s %(asctime)s] %(name)s: %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='[%(levelname)s %(asctime)s] %(name)s: %(message)s', level=logging.INFO)
 
 
 # log in
-bot = TelegramClient('bot', settings.api_id, settings.api_hash, catch_up=True)
+bot = TelegramClient('bot', settings.api_id, settings.api_hash, catch_up=False)
 
 
 # variables
@@ -101,6 +101,9 @@ async def schedule_handler(event):
 # job for APScheduler
 async def auto_poster():
     if settings.schedule_active:
+        if not db_functions.db_has_data(DB):
+            logging.info('****** Auto poster: db is empty ******')
+            return
         logging.debug('Schedule is active - attempting to grab a post...')
         post_id_from_queue = db_functions.pop_post_from_db(DB)
         new_post = await bot.get_messages(public_from, ids=post_id_from_queue)
@@ -122,7 +125,7 @@ async def main():
 # APScheduler initialization
 scheduler = AsyncIOScheduler()
 # scheduler.add_job(auto_poster, 'cron', hour='0,8,16', jitter=6000)
-scheduler.add_job(auto_poster, 'interval', seconds=5)
+scheduler.add_job(auto_poster, 'interval', seconds=30)
 
 
 if __name__ == "__main__":

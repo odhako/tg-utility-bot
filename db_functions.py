@@ -3,7 +3,7 @@ import sqlite3
 import logging
 
 
-logging.basicConfig(format='[%(levelname)s %(asctime)s] %(name)s: %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='[%(levelname)s %(asctime)s] %(name)s: %(message)s', level=logging.INFO)
 
 
 def create_db(db_name):
