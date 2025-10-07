@@ -12,16 +12,11 @@ jobs:
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/ssh.key
           chmod 600 ~/.ssh/ssh.key
           eval $(ssh-agent -s)          
-          ssh-add ~/.ssh/ssh.key
-        shell: bash
-      - name: connecting server and making something
-        run: |          
+          ssh-add ~/.ssh/ssh.key              
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} <<EOF
             ls -a
             pwd
             exit
           EOF
-        shell: bash
-      - name: removing ssh key
-        run: rm ~/.ssh/ssh.key
+          rm ~/.ssh/ssh.key
         shell: bash
