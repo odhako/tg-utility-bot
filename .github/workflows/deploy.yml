@@ -16,4 +16,5 @@ jobs:
           ssh -tt -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}
           ls -a
           pwd
+          exit
         shell: bash
